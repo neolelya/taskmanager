@@ -1,5 +1,6 @@
-import {MONTH_NAMES} from '../const';
-import {formatTime, createElement} from '../utils';
+import AbstractComponent from './abstract-component';
+import {MONTH_NAMES} from '../utils/const';
+import {formatTime} from '../utils/common';
 
 const createHashtagsMarkup = (hashtags) => {
   return hashtags
@@ -37,17 +38,14 @@ const createTaskTemplate = (task) => {
             <button type="button" class="card__btn card__btn--archive">archive</button>
             <button type="button" class="card__btn card__btn--favorites card__btn--disabled">favorites</button>
           </div>
-
           <div class="card__color-bar">
             <svg class="card__color-bar-wave" width="100%" height="10">
               <use xlink:href="#wave"></use>
             </svg>
           </div>
-
           <div class="card__textarea-wrap">
             <p class="card__text">${description}</p>
           </div>
-
           <div class="card__settings">
             <div class="card__details">
               <div class="card__dates">
@@ -58,7 +56,6 @@ const createTaskTemplate = (task) => {
                   </p>
                 </div>
               </div>
-
               <div class="card__hashtag">
                 <div class="card__hashtag-list">
                     ${hashtags}
@@ -72,9 +69,9 @@ const createTaskTemplate = (task) => {
   );
 };
 
-export default class Task {
+export default class Task extends AbstractComponent {
   constructor(task) {
-    this._element = null;
+    super();
     this._task = task;
   }
 
@@ -82,15 +79,7 @@ export default class Task {
     return createTaskTemplate(this._task);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
-
-  removeElement() {
-    this._element = null;
+  setEditButtonClickHandler(handler) {
+    this.getElement().querySelector(`.card__btn--edit`).addEventListener(`click`, handler);
   }
 }
