@@ -1,6 +1,5 @@
 import AbstractComponent from './abstract-component';
-import {formatTime} from '../utils/common';
-import {MONTH_NAMES} from '../utils/const';
+import {formatTime, formatDate} from '../utils/common';
 
 const createHashtagsMarkup = (hashtags) => {
   return hashtags
@@ -30,8 +29,7 @@ const createTaskTemplate = (task) => {
   const isExpired = dueDate instanceof Date && dueDate < Date.now();
   const isDateShowing = !!dueDate;
 
-  const date = isDateShowing ? `${dueDate.getDate()} ${MONTH_NAMES[dueDate.getMonth()]}` : ``;
-  // const date = isDateShowing ? formatDate(dueDate) : ``;
+  const date = isDateShowing ? formatDate(dueDate) : ``;
   const time = isDateShowing ? formatTime(dueDate) : ``;
 
   const hashtags = createHashtagsMarkup(Array.from(tags));
