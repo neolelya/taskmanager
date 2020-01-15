@@ -1,5 +1,8 @@
 import AbstractComponent from './abstract-component';
 import {formatTime, formatDate, isOverdueDate} from '../utils/common';
+import debounce from 'lodash/debounce';
+
+const DEBOUNCE_TIMEOUT = 500;
 
 const createHashtagsMarkup = (hashtags) => {
   return hashtags
@@ -97,10 +100,10 @@ export default class Task extends AbstractComponent {
   }
 
   setFavoritesButtonClickHandler(handler) {
-    this.getElement().querySelector(`.card__btn--favorites`).addEventListener(`click`, handler);
+    this.getElement().querySelector(`.card__btn--favorites`).addEventListener(`click`, debounce(handler, DEBOUNCE_TIMEOUT));
   }
 
   setArchiveButtonClickHandler(handler) {
-    this.getElement().querySelector(`.card__btn--archive`).addEventListener(`click`, handler);
+    this.getElement().querySelector(`.card__btn--archive`).addEventListener(`click`, debounce(handler, DEBOUNCE_TIMEOUT));
   }
 }
